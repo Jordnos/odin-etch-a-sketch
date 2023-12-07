@@ -34,7 +34,12 @@ function deleteCurrentSketchPad() {
 function addEventListeners() {
     document.querySelectorAll(".square").forEach(square => {
         square.addEventListener("mouseenter", () => {
-            square.classList.add("hovered");
+            if (square.classList.contains("hovered")) {
+                let currentBrightness = window.getComputedStyle(square).getPropertyValue("filter").match(/\((.*)\)/)[1];
+                square.style.filter = `brightness(${currentBrightness-0.1})`;
+            } else {
+                square.classList.add("hovered");
+            }
         })
     });
 

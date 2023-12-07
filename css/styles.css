@@ -17,6 +17,7 @@
 
 .square.hovered {
     background: yellow;
+    filter: brightness(1);
 }
 
 .new-grid-button {
