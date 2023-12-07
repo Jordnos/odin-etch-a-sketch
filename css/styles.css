@@ -16,7 +16,6 @@
 }
 
 .square.hovered {
-    background: yellow;
     filter: brightness(1);
 }
 

@@ -31,9 +31,18 @@ function deleteCurrentSketchPad() {
     }
 }
 
+function randomColour() {
+    let r = Math.floor(Math.random()*(226));
+    let g = Math.floor(Math.random()*(226));
+    let b = Math.floor(Math.random()*(226));
+    return [r, g, b];
+}
+
 function addEventListeners() {
     document.querySelectorAll(".square").forEach(square => {
         square.addEventListener("mouseenter", () => {
+            let colour = randomColour();
+            square.style.background = `rgb(${colour[0]}, ${colour[1]}, ${colour[2]})`;
             if (square.classList.contains("hovered")) {
                 let currentBrightness = window.getComputedStyle(square).getPropertyValue("filter").match(/\((.*)\)/)[1];
                 square.style.filter = `brightness(${currentBrightness-0.1})`;
