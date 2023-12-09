@@ -6,6 +6,7 @@ const RAINBOW_BRUSH = 5;
 
 let gridSize = 16;
 let brush = COLOR_BRUSH;
+let mouseDown = false;
 
 function createDivs() {
     let container = document.querySelector(".container");
@@ -45,24 +46,30 @@ function getRandomColour() {
     return [r, g, b];
 }
 
+function useBrush(e) {
+    if (e.type === "mouseover" && mouseDown === false) {
+        return;
+    }
+    let currentBrightness = window.getComputedStyle(this).getPropertyValue("filter").match(/\((.*)\)/)[1];
+    if (brush === RAINBOW_BRUSH) {
+        let colour = getRandomColour();
+        this.style.background = `rgb(${colour[0]}, ${colour[1]}, ${colour[2]})`;
+    } else if (brush === DARKEN_BRUSH) {
+        this.style.filter = `brightness(${parseFloat(currentBrightness) - 0.1})`;
+    } else if (brush === LIGHTEN_BRUSH && currentBrightness < 1) {
+        this.style.filter = `brightness(${parseFloat(currentBrightness) + 0.1})`;
+    } else if (brush === COLOR_BRUSH) {
+        this.style.background = "yellow";
+    } else if (brush === ERASE_BRUSH) {
+        this.style.background = "white";
+        this.style.filter = `brightness(${1})`;
+    }
+}
+
 function addBrushEventListener() {
     document.querySelectorAll(".square").forEach(square => {
-        square.addEventListener("mouseenter", () => {
-            let currentBrightness = window.getComputedStyle(square).getPropertyValue("filter").match(/\((.*)\)/)[1];
-            if (brush === RAINBOW_BRUSH) {
-                let colour = getRandomColour();
-                square.style.background = `rgb(${colour[0]}, ${colour[1]}, ${colour[2]})`;
-            } else if (brush === DARKEN_BRUSH) {
-                square.style.filter = `brightness(${parseFloat(currentBrightness) - 0.1})`;
-            } else if (brush === LIGHTEN_BRUSH && currentBrightness < 1) {
-                square.style.filter = `brightness(${parseFloat(currentBrightness) + 0.1})`;
-            } else if (brush === COLOR_BRUSH) {
-                square.style.background = "yellow";
-            } else if (brush === ERASE_BRUSH) {
-                square.style.background = "white";
-                square.style.filter = `brightness(${1})`;
-            }
-        })
+        square.addEventListener("mouseover", useBrush);
+        square.addEventListener("mousedown", useBrush);
     });
 }
 
@@ -93,6 +100,14 @@ function addEventListeners() {
     document.querySelector(".lighten-brush-button").addEventListener("click", () => {
         brush = LIGHTEN_BRUSH;
     });
+
+    document.body.onmousedown = () => {
+        mouseDown = true;
+    };
+
+    document.body.onmouseup = () => {
+        mouseDown = false;
+    };
 }
 
 function init() {
