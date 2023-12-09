@@ -13,10 +13,8 @@
 .square {
     flex: auto;
     border: 1px solid black;
-}
-
-.square.hovered {
     filter: brightness(1);
+    background: white;
 }
 
 .new-grid-button {
