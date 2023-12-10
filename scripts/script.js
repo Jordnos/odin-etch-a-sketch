@@ -9,7 +9,7 @@ let brush = COLOR_BRUSH;
 let mouseDown = false;
 
 function createDivs() {
-    let container = document.querySelector(".container");
+    let container = document.querySelector(".grid-container");
     for (let i = 0; i < gridSize; i++) {
         let col = document.createElement("div");
         col.classList.add("grid-col");
@@ -33,7 +33,7 @@ function deleteSketchPadContents(node) {
 }
 
 function deleteCurrentSketchPad() {
-    let container = document.querySelector(".container");
+    let container = document.querySelector(".grid-container");
     while (container.hasChildNodes()) {
         deleteSketchPadContents(container.firstChild);
     }
@@ -75,6 +75,11 @@ function addBrushEventListener() {
 
 function addEventListeners() {
     addBrushEventListener();
+
+    document.querySelector(".clear-button").addEventListener("click", () => {
+        deleteCurrentSketchPad();
+        init();
+    });
 
     document.querySelector(".new-grid-button").addEventListener("click", () => {
         gridSize = prompt("What size sketchpad: ");
