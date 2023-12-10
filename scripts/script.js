@@ -6,6 +6,7 @@ const RAINBOW_BRUSH = 5;
 
 let gridSize = 16;
 let brush = COLOR_BRUSH;
+let brushColor = document.querySelector("#color-picker").value;
 let mouseDown = false;
 
 function createDivs() {
@@ -59,7 +60,7 @@ function useBrush(e) {
     } else if (brush === LIGHTEN_BRUSH && currentBrightness < 1) {
         this.style.filter = `brightness(${parseFloat(currentBrightness) + 0.1})`;
     } else if (brush === COLOR_BRUSH) {
-        this.style.background = "yellow";
+        this.style.background = brushColor;
     } else if (brush === ERASE_BRUSH) {
         this.style.background = "white";
         this.style.filter = `brightness(${1})`;
@@ -76,18 +77,8 @@ function addBrushEventListener() {
 function addEventListeners() {
     addBrushEventListener();
 
-    document.querySelector(".clear-button").addEventListener("click", () => {
-        deleteCurrentSketchPad();
-        init();
-    });
-
-    document.querySelector(".new-grid-button").addEventListener("click", () => {
-        gridSize = prompt("What size sketchpad: ");
-        while (gridSize > 100) {
-            gridSize = prompt("Please choose a size smaller than 100: ");
-        }
-        deleteCurrentSketchPad();
-        init();
+    document.querySelector("#color-picker").addEventListener("change", () => {
+        brushColor = document.querySelector("#color-picker").value;
     });
 
     document.querySelector(".colour-brush-button").addEventListener("click", () => {
@@ -104,6 +95,20 @@ function addEventListeners() {
 
     document.querySelector(".lighten-brush-button").addEventListener("click", () => {
         brush = LIGHTEN_BRUSH;
+    });
+
+    document.querySelector(".clear-button").addEventListener("click", () => {
+        deleteCurrentSketchPad();
+        init();
+    });
+
+    document.querySelector(".new-grid-button").addEventListener("click", () => {
+        gridSize = prompt("What size sketchpad: ");
+        while (gridSize > 100) {
+            gridSize = prompt("Please choose a size smaller than 100: ");
+        }
+        deleteCurrentSketchPad();
+        init();
     });
 
     document.body.onmousedown = () => {
