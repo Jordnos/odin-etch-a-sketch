@@ -9,7 +9,7 @@ let activeBrush = document.querySelector(".active");
 let brushColor = document.querySelector("#color-picker").value;
 let mouseDown = false;
 
-function createDivs() {
+function createGrid() {
     let container = document.querySelector(".grid-container");
     for (let i = 0; i < gridSize; i++) {
         let col = document.createElement("div");
@@ -68,19 +68,19 @@ function useBrush(e) {
 }
 
 function addBrushEventListener() {
+    document.body.onmousedown = () => {
+        mouseDown = true;
+    };
+    document.body.onmouseup = () => {
+        mouseDown = false;
+    };
     document.querySelectorAll(".square").forEach(square => {
         square.addEventListener("mouseover", useBrush);
         square.addEventListener("mousedown", useBrush);
     });
 }
 
-function addEventListeners() {
-    addBrushEventListener();
-
-    document.querySelector("#color-picker").addEventListener("change", () => {
-        brushColor = document.querySelector("#color-picker").value;
-    });
-
+function addBrushButtonEventListener() {
     document.querySelectorAll(".brush-button").forEach(brush => {
         brush.addEventListener("click", () => {
             let active = document.querySelector(".active");
@@ -89,12 +89,22 @@ function addEventListeners() {
             activeBrush = brush;
         });
     });
+}
 
+function addColorPickerEventListener() {
+    document.querySelector("#color-picker").addEventListener("input", () => {
+        brushColor = document.querySelector("#color-picker").value;
+    });
+}
+
+function addClearButtonEventListener() {
     document.querySelector(".clear-button").addEventListener("click", () => {
         deleteCurrentSketchPad();
         init();
     });
+}
 
+function addNewGridButtonEventListener() {
     document.querySelector(".new-grid-button").addEventListener("click", () => {
         gridSize = prompt("What size sketchpad: ");
         while (gridSize > 100) {
@@ -103,18 +113,18 @@ function addEventListeners() {
         deleteCurrentSketchPad();
         init();
     });
+}
 
-    document.body.onmousedown = () => {
-        mouseDown = true;
-    };
-
-    document.body.onmouseup = () => {
-        mouseDown = false;
-    };
+function addEventListeners() {
+    addBrushEventListener();
+    addBrushButtonEventListener();
+    addColorPickerEventListener();
+    addClearButtonEventListener();
+    addNewGridButtonEventListener();
 }
 
 function init() {
-    createDivs();
+    createGrid();
     addEventListeners();
 }
 
