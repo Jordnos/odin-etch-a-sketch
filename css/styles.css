@@ -1,10 +1,19 @@
+* {
+    color: #222222;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #e0e0ce;
+}
+
 h1 {
     text-align: center;
 }
 
 .container {
     display: flex;
-    width: 800px;
+    width: 900px;
     height: 800px;
     justify-content: space-between;
     margin: 0 auto;
@@ -12,8 +21,7 @@ h1 {
 
 .grid-container,
 .controls {
-    border: 10px solid black;
-    border-radius: 10px;
+    border: none;
 }
 
 .grid-container {
@@ -29,12 +37,13 @@ h1 {
     gap: 25px;
     margin: 0 10px;
     height: 600px;
-    width: 190px;
+    width: 250px;
+    background: #474747;
+    border-radius: 50px;
 }
 
 .controls button {
-    border: 1px solid black;
-    border-radius: 10px;
+    border: none;
     padding: 16px;
     width: 150px;
 }
@@ -42,13 +51,29 @@ h1 {
 .controls button,
 .controls input {
     margin: 0 auto;
+    border-radius: 15px;
+}
+
+.brush-button {
+    background: #ad343e;
+}
+
+.brush-button.active {
+    background: #f2af29;
 }
 
 input[type="color"] {
     /* -webkit-appearance: none; */
+    background: inherit;
     border: none;
     height: 100px;
     width: 100px;
+}
+
+.clear-button,
+.new-grid-button {
+    background: #222222;
+    color: #ad343e;
 }
 
 input[type='color']::-webkit-color-swatch-wrapper {
@@ -68,17 +93,8 @@ input[type='color']::-webkit-color-swatch {
 
 .square {
     flex: auto;
-    border: 1px solid black;
+    border: 1px solid grey;
     filter: brightness(1);
     background: white;
     user-select: none;
-}
-
-.active {
-    background: grey;
-}
-
-.clear-button,
-.new-grid-button {
-    background: white;
 }
