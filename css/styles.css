@@ -4,16 +4,22 @@ h1 {
 
 .container {
     display: flex;
-    width: 900px;
-    height: 900px;
+    width: 800px;
+    height: 800px;
     justify-content: space-between;
     margin: 0 auto;
 }
 
+.grid-container,
+.controls {
+    border: 10px solid black;
+    border-radius: 10px;
+}
+
 .grid-container {
     display: flex;
-    width: 700px;
-    height: 700px;
+    width: 600px;
+    height: 600px;
 }
 
 .controls {
@@ -21,11 +27,9 @@ h1 {
     flex-direction: column;
     justify-content: center;
     gap: 25px;
-    border: 1px solid black;
     margin: 0 10px;
-    height: 700px;
+    height: 600px;
     width: 190px;
-
 }
 
 .controls button {
@@ -70,3 +74,11 @@ input[type='color']::-webkit-color-swatch {
     user-select: none;
 }
 
+.active {
+    background: grey;
+}
+
+.clear-button,
+.new-grid-button {
+    background: white;
+}

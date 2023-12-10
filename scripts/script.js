@@ -1,11 +1,11 @@
-const COLOR_BRUSH = 1;
-const ERASE_BRUSH = 2;
-const LIGHTEN_BRUSH = 3;
-const DARKEN_BRUSH = 4;
-const RAINBOW_BRUSH = 5;
+const COLOR_BRUSH = "color-brush";
+const ERASE_BRUSH = "erase-brush";
+const LIGHTEN_BRUSH = "lighten-brush";
+const DARKEN_BRUSH = "darken-brush";
+const RAINBOW_BRUSH = 5; // no used
 
 let gridSize = 16;
-let brush = COLOR_BRUSH;
+let activeBrush = document.querySelector(".active");
 let brushColor = document.querySelector("#color-picker").value;
 let mouseDown = false;
 
@@ -52,16 +52,16 @@ function useBrush(e) {
         return;
     }
     let currentBrightness = window.getComputedStyle(this).getPropertyValue("filter").match(/\((.*)\)/)[1];
-    if (brush === RAINBOW_BRUSH) {
+    if (activeBrush === RAINBOW_BRUSH) {
         let colour = getRandomColour();
         this.style.background = `rgb(${colour[0]}, ${colour[1]}, ${colour[2]})`;
-    } else if (brush === DARKEN_BRUSH) {
+    } else if (activeBrush.id === DARKEN_BRUSH) {
         this.style.filter = `brightness(${parseFloat(currentBrightness) - 0.1})`;
-    } else if (brush === LIGHTEN_BRUSH && currentBrightness < 1) {
+    } else if (activeBrush.id === LIGHTEN_BRUSH && currentBrightness < 1) {
         this.style.filter = `brightness(${parseFloat(currentBrightness) + 0.1})`;
-    } else if (brush === COLOR_BRUSH) {
+    } else if (activeBrush.id === COLOR_BRUSH) {
         this.style.background = brushColor;
-    } else if (brush === ERASE_BRUSH) {
+    } else if (activeBrush.id === ERASE_BRUSH) {
         this.style.background = "white";
         this.style.filter = `brightness(${1})`;
     }
@@ -81,20 +81,13 @@ function addEventListeners() {
         brushColor = document.querySelector("#color-picker").value;
     });
 
-    document.querySelector(".colour-brush-button").addEventListener("click", () => {
-        brush = COLOR_BRUSH;
-    });
-
-    document.querySelector(".erase-brush-button").addEventListener("click", () => {
-        brush = ERASE_BRUSH;
-    });
-
-    document.querySelector(".darken-brush-button").addEventListener("click", () => {
-        brush = DARKEN_BRUSH;
-    });
-
-    document.querySelector(".lighten-brush-button").addEventListener("click", () => {
-        brush = LIGHTEN_BRUSH;
+    document.querySelectorAll(".brush-button").forEach(brush => {
+        brush.addEventListener("click", () => {
+            let active = document.querySelector(".active");
+            active.classList.remove("active");
+            brush.classList.add("active");
+            activeBrush = brush;
+        });
     });
 
     document.querySelector(".clear-button").addEventListener("click", () => {
